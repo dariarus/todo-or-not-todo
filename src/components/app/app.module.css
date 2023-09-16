@@ -1,0 +1,52 @@
+.main {
+  margin: 0 auto;
+  padding: 80px 0;
+}
+
+.todos-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ 
+}
+
+.todos-board__heading {
+  margin: 0 0 10px;
+  font-family: 'Nunito', 'Arial', sans-serif;
+  font-weight: 300;
+  font-size: 65px;
+  line-height: 67px;
+  color: #abb1c1;
+}
+
+.todos-board__tasks-wrap {
+  box-sizing: border-box;
+  padding: 20px;
+  border-top: 1px solid rgba(171, 177, 193, .5); /* #abb1c1 */
+  border-left: 1px solid rgba(171, 177, 193, .5); /* #abb1c1 */
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px #abb1c1;
+}
+
+.scroll-wrap {
+  padding-right: 10px;
+  max-height: 400px;
+  /*max-height: 25em;*/
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-color: #abb1c1 rgba(171, 177, 193, .5); /* «цвет ползунка» «цвет полосы скроллбара» */
+  scrollbar-width: thin;
+}
+
+.scroll-wrap::-webkit-scrollbar {
+  width: 6px;
+  height: 0;
+  border: 1px solid rgba(171, 177, 193, .5);
+  border-radius: 30px;
+}
+
+/* ползунок скроллбара */
+.scroll-wrap::-webkit-scrollbar-thumb {
+  background-color: rgba(171, 177, 193, .5);
+  border-radius: 50px;
+}
