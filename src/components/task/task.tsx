@@ -2,7 +2,7 @@ import React, {FunctionComponent} from 'react';
 
 import taskStyles from './task.module.css';
 
-import {TTask} from '../../types/props';
+import {TTask} from '../../services/types/props';
 
 export const Task: FunctionComponent<TTask> = (props) => {
   return (

@@ -29,10 +29,13 @@
   box-sizing: border-box;
   padding: 20px;
   border-top: 1px solid rgba(171, 177, 193, .5); /* #abb1c1 */
-  /*border-left: 1px solid rgba(171, 177, 193, .5);*/
-  /*border-bottom-left-radius: 10px;*/
-  /*border-bottom-right-radius: 10px;*/
-  /*box-shadow: 5px 5px 5px #abb1c1;*/
+}
+
+.radio-button-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .todos-board__scroll-wrap {
