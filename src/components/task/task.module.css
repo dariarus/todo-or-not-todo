@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   margin-bottom: 10px;
-  width: 750px;
 }
 
 .task__checkbox {
@@ -53,12 +52,12 @@
 }
 
 .task__text_heading {
-  margin-bottom: 8px;
-  font-size: 25px;
-  line-height: 27px;
+  margin-bottom: 5px;
+  font-size: 20px;
+  line-height: 22px;
 }
 
 .task__text_description {
-  font-size: 16px;
-  line-height: 18px;
+  font-size: 14px;
+  line-height: 16px;
 }
