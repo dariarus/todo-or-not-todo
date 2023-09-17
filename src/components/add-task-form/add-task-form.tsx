@@ -1,20 +1,57 @@
-import React, {FunctionComponent} from 'react';
+import React, {ChangeEvent, MouseEvent, FunctionComponent, useState, MouseEventHandler, FormEvent} from 'react';
 
 import addTaskFormStyles from './add-task-form.module.css';
 
-export const AddTaskForm: FunctionComponent = () => {
+import {IInputsValuesState} from '../../services/types/state';
+
+import {inputsValuesInitialState} from '../../utils/constants';
+import {TAddTasksForm} from '../../services/types/props';
+
+export const AddTaskForm: FunctionComponent<TAddTasksForm> = (props) => {
+  const [inputsValues, setInputsValues] = useState<IInputsValuesState>(inputsValuesInitialState);
+
   return (
-    <form className={addTaskFormStyles.form}>
+    <form className={addTaskFormStyles.form}
+          onChange={(e: FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+          }}
+    >
       <div className={addTaskFormStyles['form__input-wrap']}>
         <input type="text"
-               placeholder="Кратко опишите задачу"
-               className={`${addTaskFormStyles.input} ${addTaskFormStyles['text-input']}`}/>
-        {/*<div className={`${addTaskFormStyles['text-area-wrap']}`}>*/}
-          <textarea placeholder="Добавьте подробное описание задачи"
-                    className={` ${addTaskFormStyles['text-area']}`}/>
-        {/*</div>*/}
+               value={inputsValues.textInputValue}
+               placeholder="Задача"
+               className={`${addTaskFormStyles.input} ${addTaskFormStyles['text-input']}`}
+               onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                 setInputsValues({
+                   ...inputsValues,
+                   textInputValue: e.target.value
+                 })
+               }}
+        />
+        <textarea value={inputsValues.textAreaValue}
+                  placeholder="Описание (опционально)"
+                  className={addTaskFormStyles['text-area']}
+                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+                    setInputsValues({
+                      ...inputsValues,
+                      textAreaValue: e.target.value
+                    })
+                  }}
+        />
       </div>
-      <button className={addTaskFormStyles.button}>Добавить<br/>задачу</button>
+      <button className={addTaskFormStyles.button}
+              onClick={(e: MouseEvent<HTMLButtonElement>) => {
+                e.preventDefault();
+                props.onAddTask({
+                  name: inputsValues.textInputValue,
+                  description: inputsValues.textAreaValue ? inputsValues.textAreaValue : undefined,
+                  isDone: false
+                });
+                setInputsValues(inputsValuesInitialState);
+              }}
+      >
+        Добавить<br/>задачу
+      </button>
     </form>
   )
 }

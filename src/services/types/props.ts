@@ -1,4 +1,4 @@
-import {ChangeEvent} from 'react';
+import React, {ChangeEvent} from 'react';
 
 export type TTask = {
   name: string,
@@ -11,4 +11,10 @@ export type TRadioButton = {
   value: string,
   checked: boolean,
   onClickRadio: (event: ChangeEvent<HTMLInputElement>) => void
+}
+
+export type TAddTasksForm = {
+  tasksArray: Array<TTask>,
+  // onAddTask: React.Dispatch<React.SetStateAction<Array<TTask>>>
+  onAddTask: (task: TTask) => void
 }
