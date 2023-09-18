@@ -1,13 +1,12 @@
 .task__item {
-  padding: 10px 30px;
+  padding: 10px 40px;
   width: 100%;
   border-radius: 30px;
-  background-color: rgba(171, 177, 193, .3);
-  /*box-shadow: inset 0 0 20px #fff, inset 0 0 25px #a1a1a1, inset 0 0 30px #fff;*/
+  box-shadow: 5px 5px 5px #abb1c1;
 }
 
-.task-wrap:last-of-type {
-  margin-bottom: 0;
+.task__item_is-done {
+  box-shadow: inset 3px 3px 5px #abb1c1;
 }
 
 .task__text {
@@ -16,6 +15,11 @@
   font-weight: 300;
   color: #000;
   overflow-wrap: break-word;
+}
+
+.task__text_crossed {
+  color: #abb1c1;
+  text-decoration: line-through ;
 }
 
 .task__text_heading {

@@ -16,24 +16,23 @@ function App() {
   const [tasksArray, setTasksArray] = useState<Array<TTask>>([]);
   const [showingArray, setShowingArray] = useState<Array<TTask>>(tasksArray);
 
-  // let showingArray = [];
-
   const handleSetTasksArray = (task: TTask) => {
-    let copiedTasks = [...tasksArray];
+    let copiedTasks = tasksArray.map(task => {
+      return {...task}
+    });
     copiedTasks.push(task);
     setTasksArray(copiedTasks);
-
   }
 
   const refreshTasksArray = () => {
     if (filterRadioButtons.allIsChecked) {
       setShowingArray(tasksArray);
     } else if (filterRadioButtons.undoneIsChecked) {
-      const filteredUndonesArray = tasksArray.filter(task => !task.isDone);
-      setShowingArray(filteredUndonesArray);
+      const filteredUndoneTasksArray = tasksArray.filter(task => !task.isDone);
+      setShowingArray(filteredUndoneTasksArray);
     } else {
-      const filteredDonesArray = tasksArray.filter(task => task.isDone);
-      setShowingArray(filteredDonesArray);
+      const filteredDoneTasksArray = tasksArray.filter(task => task.isDone);
+      setShowingArray(filteredDoneTasksArray);
     }
   }
 
@@ -45,6 +44,23 @@ function App() {
       const task = copiedTasks.find(task => task.id === taskId);
       if (task) {
         task.isDone = !task.isDone;
+      }
+    }
+    setTasksArray(copiedTasks);
+  }
+
+  const handleOnDeleteTask = (taskId: string) => {
+    let copiedTasks = tasksArray.map(task => {
+      return {...task}
+    });
+    if (taskId) {
+      const task = copiedTasks.find(task => task.id === taskId);
+      let taskIndex = -1;
+      if (task) {
+        taskIndex = copiedTasks.indexOf(task);
+      }
+      if (taskIndex > -1) {
+        copiedTasks.splice(taskIndex, 1);
       }
     }
     setTasksArray(copiedTasks);
@@ -88,8 +104,8 @@ function App() {
           </div>
           <div className={appStyles['todos-board__scroll-wrap']}>
             {
-              showingArray.map((task, index) => (
-                <React.Fragment key={index}>
+              showingArray.map((task) => (
+                <React.Fragment key={task.id}>
                   <div className={appStyles.task}>
                     <input type="checkbox"
                            checked={task.isDone}
@@ -102,6 +118,11 @@ function App() {
                           name={task.name}
                           description={task.description}
                           isDone={task.isDone}
+                    />
+                    <button className={appStyles['task__cross-button']}
+                            onClick={() => {
+                              handleOnDeleteTask(task.id);
+                            }}
                     />
                   </div>
                 </React.Fragment>
