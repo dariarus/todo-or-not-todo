@@ -11,7 +11,7 @@ export const RadioButton: FunctionComponent<TRadioButton> = (props) => {
              id={props.value}
              name="radio"
              value={props.value}
-             checked={props.checked}
+             checked={props.isChecked}
              className={radioButtonStyles.input}
              onChange={props.onClickRadio}
       />

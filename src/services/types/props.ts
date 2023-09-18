@@ -1,20 +1,20 @@
-import React, {ChangeEvent} from 'react';
+import {ChangeEvent} from 'react';
 
 export type TTask = {
+  id: string,
   name: string,
   description: string | undefined,
-  isDone: boolean
+  isDone: boolean,
 }
 
 export type TRadioButton = {
   label: string,
   value: string,
-  checked: boolean,
+  isChecked: boolean,
   onClickRadio: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
 export type TAddTasksForm = {
   tasksArray: Array<TTask>,
-  // onAddTask: React.Dispatch<React.SetStateAction<Array<TTask>>>
-  onAddTask: (task: TTask) => void
+  onAddTask: (task: TTask) => void,
 }

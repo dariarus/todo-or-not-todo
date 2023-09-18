@@ -10,6 +10,8 @@ import {TAddTasksForm} from '../../services/types/props';
 export const AddTaskForm: FunctionComponent<TAddTasksForm> = (props) => {
   const [inputsValues, setInputsValues] = useState<IInputsValuesState>(inputsValuesInitialState);
 
+  const generateUniqId = (): string => Date.now().toString(36) + Math.random().toString(36).substring(2);
+
   return (
     <form className={addTaskFormStyles.form}
           onChange={(e: FormEvent<HTMLFormElement>) => {
@@ -43,6 +45,7 @@ export const AddTaskForm: FunctionComponent<TAddTasksForm> = (props) => {
               onClick={(e: MouseEvent<HTMLButtonElement>) => {
                 e.preventDefault();
                 props.onAddTask({
+                  id: generateUniqId(),
                   name: inputsValues.textInputValue,
                   description: inputsValues.textAreaValue ? inputsValues.textAreaValue : undefined,
                   isDone: false
