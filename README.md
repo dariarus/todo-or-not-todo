@@ -11,4 +11,4 @@
 ```shell
 npm i && npm start
 ```
-*Ссылка на проектный сайт на GitHub Pages*: [Поиск книг в Google Books]()
+*Ссылка на проектный сайт на GitHub Pages*: [Поиск книг в Google Books](https://dariarus.github.io/todo-or-not-todo/)
