@@ -7,6 +7,13 @@ export type TTask = {
   isDone: boolean,
 }
 
+export type TTaskItem = TTask & {
+  index: number,
+  onChangeTaskStatus: (taskId: string) => void,
+  onDeleteTask: (taskId: string) => void,
+  onMoveTask: (dragIndex: number, hoverIndex: number) => void
+}
+
 export type TRadioButton = {
   label: string,
   value: string,

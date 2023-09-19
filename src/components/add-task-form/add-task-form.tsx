@@ -1,16 +1,15 @@
-import React, {ChangeEvent, MouseEvent, FunctionComponent, useState, MouseEventHandler, FormEvent} from 'react';
+import React, {ChangeEvent, MouseEvent, FunctionComponent, useState, FormEvent} from 'react';
 
 import addTaskFormStyles from './add-task-form.module.css';
 
 import {IInputsValuesState} from '../../services/types/state';
+import {TAddTasksForm} from '../../services/types/props';
 
 import {inputsValuesInitialState} from '../../utils/constants';
-import {TAddTasksForm} from '../../services/types/props';
+import {generateUniqueId} from '../../utils/functions';
 
 export const AddTaskForm: FunctionComponent<TAddTasksForm> = (props) => {
   const [inputsValues, setInputsValues] = useState<IInputsValuesState>(inputsValuesInitialState);
-
-  const generateUniqId = (): string => Date.now().toString(36) + Math.random().toString(36).substring(2);
 
   return (
     <form className={addTaskFormStyles.form}
@@ -45,7 +44,7 @@ export const AddTaskForm: FunctionComponent<TAddTasksForm> = (props) => {
               onClick={(e: MouseEvent<HTMLButtonElement>) => {
                 e.preventDefault();
                 props.onAddTask({
-                  id: generateUniqId(),
+                  id: generateUniqueId(),
                   name: inputsValues.textInputValue,
                   description: inputsValues.textAreaValue ? inputsValues.textAreaValue : undefined,
                   isDone: false

@@ -1,15 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import appStyles from './app.module.css';
 
 import {AddTaskForm} from '../add-task-form/add-task-form';
-import {Task} from '../task/task';
 import {RadioButton} from '../radio-button/radio-button';
 
 import {radioButtonsInitialState} from '../../utils/constants';
 
 import {IRadioButtonsState} from '../../services/types/state';
 import {TTask} from '../../services/types/props';
+import {TaskItem} from '../task-item/task-item';
 
 function App() {
   const [filterRadioButtons, setFilterRadioButtons] = useState<IRadioButtonsState>(radioButtonsInitialState);
@@ -17,9 +19,7 @@ function App() {
   const [showingArray, setShowingArray] = useState<Array<TTask>>(tasksArray);
 
   const handleSetTasksArray = (task: TTask) => {
-    let copiedTasks = tasksArray.map(task => {
-      return {...task}
-    });
+    let copiedTasks = [...tasksArray];
     copiedTasks.push(task);
     setTasksArray(copiedTasks);
   }
@@ -36,7 +36,7 @@ function App() {
     }
   }
 
-  const handleOnCompleteTask = (taskId: string) => {
+  const handleOnChangeTaskStatus = (taskId: string) => {
     let copiedTasks = tasksArray.map(task => {
       return {...task}
     });
@@ -49,10 +49,36 @@ function App() {
     setTasksArray(copiedTasks);
   }
 
+  const handleOnMoveTask = useCallback((dragIndex: number, hoverIndex: number) => {
+    /* Перемещаем элементы в массиве showingArray, отображаемом в зависимости от выбранной сортировки задач,
+    на основе его индексов */
+    const updatedShowingArray = [...showingArray];
+
+    const dragItem = updatedShowingArray[dragIndex]
+    const hoverItem = updatedShowingArray[hoverIndex]
+
+    updatedShowingArray[dragIndex] = hoverItem;
+    updatedShowingArray[hoverIndex] = dragItem;
+
+    setShowingArray(updatedShowingArray);
+
+    // Перемещаем элементы в основном массиве tasksArray на основе его индексов
+    const updatedTasksArray = [...tasksArray];
+
+    const dragTask = updatedTasksArray.find(task => task.id === dragItem.id);
+    const hoverTask = updatedTasksArray.find(task => task.id === hoverItem.id);
+
+    if (dragTask && hoverTask) {
+      const dragTaskIndex = updatedTasksArray.indexOf(dragTask);
+      const hoverTaskIndex = updatedTasksArray.indexOf(hoverTask);
+      updatedTasksArray[dragTaskIndex] = hoverItem;
+      updatedTasksArray[hoverTaskIndex] = dragItem;
+    }
+    setTasksArray(updatedTasksArray);
+      }, [tasksArray, showingArray])
+
   const handleOnDeleteTask = (taskId: string) => {
-    let copiedTasks = tasksArray.map(task => {
-      return {...task}
-    });
+    let copiedTasks = [...tasksArray];
     if (taskId) {
       const task = copiedTasks.find(task => task.id === taskId);
       let taskIndex = -1;
@@ -71,7 +97,7 @@ function App() {
   }, [tasksArray, filterRadioButtons.allIsChecked, filterRadioButtons.undoneIsChecked, filterRadioButtons.doneIsChecked])
 
   return (
-    <div className={appStyles.main}>
+    <main className={appStyles.main}>
       <h1 className={appStyles['todos-board__heading']}>Мои задачи</h1>
       <div className={appStyles['todos-board']}>
         <AddTaskForm tasksArray={tasksArray} onAddTask={handleSetTasksArray}/>
@@ -102,36 +128,27 @@ function App() {
                            });
                          }}/>
           </div>
-          <div className={appStyles['todos-board__scroll-wrap']}>
-            {
-              showingArray.map((task) => (
-                <React.Fragment key={task.id}>
-                  <div className={appStyles.task}>
-                    <input type="checkbox"
-                           checked={task.isDone}
-                           className={appStyles['task__checkbox']}
-                           onChange={() => {
-                             handleOnCompleteTask(task.id);
-                           }}
-                    />
-                    <Task id={task.id}
-                          name={task.name}
-                          description={task.description}
-                          isDone={task.isDone}
-                    />
-                    <button className={appStyles['task__cross-button']}
-                            onClick={() => {
-                              handleOnDeleteTask(task.id);
-                            }}
-                    />
-                  </div>
-                </React.Fragment>
-              )).reverse()
-            }
-          </div>
+          <DndProvider backend={HTML5Backend}>
+            <ul className={appStyles['todos-board__tasks-list']}>
+              {
+                showingArray.map((task, index) => (
+                  <TaskItem key={task.id}
+                            id={task.id}
+                            index={index}
+                            name={task.name}
+                            description={task.description}
+                            isDone={task.isDone}
+                            onChangeTaskStatus={handleOnChangeTaskStatus}
+                            onDeleteTask={handleOnDeleteTask}
+                            onMoveTask={handleOnMoveTask}
+                  />
+                )).reverse()
+              }
+            </ul>
+          </DndProvider>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 
