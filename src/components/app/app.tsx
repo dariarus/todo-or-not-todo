@@ -6,12 +6,12 @@ import appStyles from './app.module.css';
 
 import {AddTaskForm} from '../add-task-form/add-task-form';
 import {RadioButton} from '../radio-button/radio-button';
+import {TaskItem} from '../task-item/task-item';
 
 import {radioButtonsInitialState} from '../../utils/constants';
 
 import {IRadioButtonsState} from '../../services/types/state';
 import {TTask} from '../../services/types/props';
-import {TaskItem} from '../task-item/task-item';
 
 function App() {
   const [filterRadioButtons, setFilterRadioButtons] = useState<IRadioButtonsState>(radioButtonsInitialState);
@@ -74,8 +74,9 @@ function App() {
       updatedTasksArray[dragTaskIndex] = hoverItem;
       updatedTasksArray[hoverTaskIndex] = dragItem;
     }
+
     setTasksArray(updatedTasksArray);
-      }, [tasksArray, showingArray])
+  }, [tasksArray, showingArray])
 
   const handleOnDeleteTask = (taskId: string) => {
     let copiedTasks = [...tasksArray];
@@ -128,24 +129,30 @@ function App() {
                            });
                          }}/>
           </div>
-          <DndProvider backend={HTML5Backend}>
-            <ul className={appStyles['todos-board__tasks-list']}>
-              {
-                showingArray.map((task, index) => (
-                  <TaskItem key={task.id}
-                            id={task.id}
-                            index={index}
-                            name={task.name}
-                            description={task.description}
-                            isDone={task.isDone}
-                            onChangeTaskStatus={handleOnChangeTaskStatus}
-                            onDeleteTask={handleOnDeleteTask}
-                            onMoveTask={handleOnMoveTask}
-                  />
-                )).reverse()
-              }
-            </ul>
-          </DndProvider>
+          <div className={appStyles['todos-board__tasks-list-wrap']}>
+            {
+              showingArray && showingArray.length > 0
+                ? <DndProvider backend={HTML5Backend}>
+                  <ul className={appStyles['todos-board__tasks-list']}>
+                    {
+                      showingArray.map((task, index) => (
+                        <TaskItem key={task.id}
+                                  id={task.id}
+                                  index={index}
+                                  name={task.name}
+                                  description={task.description}
+                                  isDone={task.isDone}
+                                  onChangeTaskStatus={handleOnChangeTaskStatus}
+                                  onDeleteTask={handleOnDeleteTask}
+                                  onMoveTask={handleOnMoveTask}
+                        />
+                      )).reverse()
+                    }
+                  </ul>
+                </DndProvider>
+                : <p className={appStyles['stub-text']}>Нет задач</p>
+            }
+          </div>
         </div>
       </div>
     </main>

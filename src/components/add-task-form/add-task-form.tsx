@@ -40,7 +40,9 @@ export const AddTaskForm: FunctionComponent<TAddTasksForm> = (props) => {
                   }}
         />
       </div>
-      <button className={addTaskFormStyles.button}
+      <button type="submit"
+              className={addTaskFormStyles.button}
+              disabled={inputsValues.textInputValue === ''}
               onClick={(e: MouseEvent<HTMLButtonElement>) => {
                 e.preventDefault();
                 props.onAddTask({

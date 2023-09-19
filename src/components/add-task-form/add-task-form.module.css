@@ -94,16 +94,17 @@
   line-height: 20px;
   color: #000;
   text-align: center;
+  cursor: pointer;
   transition: color .2s, border-color .2s;
 }
 
-.button:hover {
+.button:hover:enabled {
   color: #00996f;
   border-color: #00996f;
 }
 
 .button:disabled {
-  opacity: .5;
+  color: rgba(171, 177, 193, .5);
   cursor: unset;
 }
 
