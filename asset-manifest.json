@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/todo-or-not-todo/static/css/main.17f6ae2c.css",
+    "main.js": "/todo-or-not-todo/static/js/main.f6a0ffef.js",
+    "static/js/787.92380c77.chunk.js": "/todo-or-not-todo/static/js/787.92380c77.chunk.js",
+    "static/media/NunitoSans_7pt_Condensed-Light.ttf": "/todo-or-not-todo/static/media/NunitoSans_7pt_Condensed-Light.71ad4ce4724d6d448a27.ttf",
+    "static/media/NunitoSans_7pt_Condensed-SemiBold.ttf": "/todo-or-not-todo/static/media/NunitoSans_7pt_Condensed-SemiBold.8fcb364a2f5c8c7212ac.ttf",
+    "index.html": "/todo-or-not-todo/index.html",
+    "static/media/cross-green.svg": "/todo-or-not-todo/static/media/cross-green.e7b85908163281097800.svg",
+    "static/media/cross-black.svg": "/todo-or-not-todo/static/media/cross-black.648fbc0d26cc58d024a7.svg",
+    "static/media/tick.svg": "/todo-or-not-todo/static/media/tick.1b7a2d4e075d02e70e1d.svg",
+    "main.17f6ae2c.css.map": "/todo-or-not-todo/static/css/main.17f6ae2c.css.map",
+    "main.f6a0ffef.js.map": "/todo-or-not-todo/static/js/main.f6a0ffef.js.map",
+    "787.92380c77.chunk.js.map": "/todo-or-not-todo/static/js/787.92380c77.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.17f6ae2c.css",
+    "static/js/main.f6a0ffef.js"
+  ]
+}
